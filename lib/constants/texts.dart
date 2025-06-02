@@ -1,8 +1,8 @@
 class AppTexts {
-  // App Title
+  // Uygulama Başlığı
   static const String appTitle = 'Diary+';
 
-  // Auth Texts
+  // Giriş ve Kayıt Metinleri
   static const String login = 'Giriş Yap';
   static const String register = 'Kayıt Ol';
   static const String email = 'E-posta';
@@ -14,7 +14,7 @@ class AppTexts {
   static const String loginSuccess = 'Başarıyla giriş yapıldı!';
   static const String registerSuccess = 'Başarıyla kayıt olundu!';
 
-  // Drawer Menu Items
+  // Drawer
   static const String home = 'Anasayfa';
   static const String addDiary = 'Günlük Ekle';
   static const String profile = 'Profil';
@@ -26,7 +26,7 @@ class AppTexts {
   static const String logoutSuccess = 'Çıkış yapıldı';
   static const String logoutError = 'Çıkış sırasında hata: ';
 
-  // Profile Page
+  // Profil Sayfası
   static const String fullName = 'Ad Soyad';
   static const String birthDate = 'Doğum Tarihi';
   static const String location = 'Konum';
@@ -37,7 +37,7 @@ class AppTexts {
   static const String nameRequired = 'Lütfen adınızı girin';
   static const String noPhoto = 'Fotoğraf yok';
 
-  // Diary Page
+  // Günlük Sayfası
   static const String newNote = 'Yeni Günlük';
   static const String editNote = 'Günlük Düzenle';
   static const String writeNote = 'Günlüğünüzü yazın...';
@@ -47,19 +47,19 @@ class AppTexts {
   static const String noDiary = 'Kayıtlı günlük yok.';
   static const String noteEmpty = 'Günlük boş olamaz!';
 
-  // Error Messages
+  // Hata Mesajları
   static const String errorOccurred = 'Bir hata oluştu';
   static const String tryAgain = 'Lütfen tekrar deneyin';
   static const String networkError = 'İnternet bağlantısı hatası';
   static const String unknownError = 'Bilinmeyen bir hata oluştu';
 
-  // Success Messages
+  // Başarı Mesajları
   static const String success = 'Başarılı';
   static const String saved = 'Kaydedildi';
   static const String updated = 'Güncellendi';
   static const String deleted = 'Silindi';
 
-  // Settings Page
+  // Ayarlar Sayfası
   static const String appearance = 'Görünüm';
   static const String themeColor = 'Tema Rengi';
   static const String textSize = 'Yazı Boyutu';
@@ -75,31 +75,28 @@ class AppTexts {
   static const String settingsSaved = 'Ayarlar kaydedildi';
   static const String settingsError = 'Ayarlar kaydedilirken hata oluştu';
 
-  // General
+  // Genel
   static const String appName = 'Not Defteri';
   static const String search = 'Ara';
   static const String loading = 'Yükleniyor...';
   static const String error = 'Hata';
 
-  // Navigation
+  // Navigasyon
   static const String notes = 'Günlükler';
   static const String editProfile = 'Profili Düzenle';
   static const String phone = 'Telefon';
   static const String bio = 'Hakkımda';
-  static const String changePhoto = 'Fotoğrafı Değiştir';
-  static const String removePhoto = 'Fotoğrafı Kaldır';
 
-  // Notes
+  // Notlar
   static const String addNote = 'Günlük Ekle';
   static const String deleteNote = 'Günlük Sil';
   static const String noteTitle = 'Başlık';
   static const String noteContent = 'İçerik';
   static const String noteDate = 'Tarih';
   static const String noteColor = 'Renk';
-  static const String noNotes = 'Henüz not eklenmemiş';
-  static const String searchNotes = 'Notlarda ara...';
+  static const String noNotes = 'Henüz Günlük eklenmemiş';
 
-  // Profile
+  // Profil
   static const String name = 'Ad Soyad';
   static const String requiredField = 'Bu alan zorunludur';
   static const String invalidEmail = 'Geçersiz e-posta adresi';
@@ -111,12 +108,12 @@ class AppTexts {
   static const String personalInfo = 'Kişisel Bilgiler';
   static const String aboutYou = 'Hakkınızda';
 
-  // Messages
-  static const String noteAdded = 'Not başarıyla eklendi';
-  static const String noteUpdated = 'Not başarıyla güncellendi';
-  static const String noteDeleted = 'Not başarıyla silindi';
+  // Mesajlar
+  static const String noteAdded = 'Günlük başarıyla eklendi';
+  static const String noteUpdated = 'Günlük başarıyla güncellendi';
+  static const String noteDeleted = 'Günlük başarıyla silindi';
   static const String profileUpdated = 'Profil başarıyla güncellendi';
   static const String settingsUpdated = 'Ayarlar başarıyla güncellendi';
   static const String noInternet = 'İnternet bağlantısı yok';
   static const String checkConnection = 'Lütfen internet bağlantınızı kontrol edin';
-} 
+}

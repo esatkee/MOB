@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../../constants/constants.dart';
 import '../../constants/texts.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_drawer.dart';
@@ -8,6 +6,7 @@ import '../../functions/home_helper.dart';
 import '../widgets/home_card.dart';
 import '../widgets/note_dialog.dart';
 import '../screens/diary_detail.dart';
+import '../../functions/streak.dart';
 
 // Stateful bir ana sayfa widget'ı
 class HomePage extends StatefulWidget {
@@ -21,12 +20,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _notes = [];
   bool _isLoading = true;
+  int _streakCount = 0;
 
   @override
   void initState() {
     super.initState();
     _fetchNotes();
+    _fetchStreak();
   }
+
+  Future<void> _fetchStreak() async {
+    final streak = await StreakTracker.updateStreak();
+    setState(() {
+      _streakCount = streak;
+    });
+  }
+
 // Asenkron olarak notları veritabanından çeken fonksiyon
   Future<void> _fetchNotes() async {
     try {
@@ -61,13 +70,32 @@ class _HomePageState extends State<HomePage> {
       drawer: DrawerMenu(onAddNote: (_) => _fetchNotes()),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : _notes.isEmpty
-          ? Center(child: Text(AppTexts.noDiary))
-          : ListView.builder(
-        itemCount: _notes.length,
-        itemBuilder: (context, index) {
-          return HomeNoteCard(note: _notes[index], onTap: _onNoteTap);
-        },
+          : Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              '🔥 Streak: $_streakCount gün',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: _notes.isEmpty
+                ? Center(child: Text(AppTexts.noDiary))
+                : ListView.builder(
+              itemCount: _notes.length,
+              itemBuilder: (context, index) {
+                return HomeNoteCard(
+                  note: _notes[index],
+                  onTap: _onNoteTap,
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -81,4 +109,5 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }

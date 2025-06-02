@@ -6,7 +6,10 @@ import '../widgets/login_form.dart';
 import '../widgets/google_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// Giriş sayfası - Email/şifre ve Google ile giriş sağlar
+// GitHub için provider import
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+
+// Giriş sayfası - Email/şifre, Google ve GitHub ile giriş sağlar
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -29,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
       _obscurePassword = !_obscurePassword;
     });
   }
+
   // Email ve şifre ile giriş yapma işlemi
   Future<void> _loginWithEmailPassword() async {
     if (!_formKey.currentState!.validate()) return;
@@ -44,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _successMessage = "Giriş başarılı!";
       });
-// Başarılı giriş sonrası yönlendirme
+
       await Future.delayed(const Duration(seconds: 1));
 
       if (!mounted) return;
@@ -70,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-// Google ile giriş işlemi
+
+  // Google ile giriş işlemi
   Future<void> _signInWithGoogle() async {
     setState(() => _isLoading = true);
 
@@ -107,6 +112,35 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // GitHub ile giriş işlemi
+  Future<void> _signInWithGitHub() async {
+    setState(() => _isLoading = true);
+
+    try {
+      final githubProvider = GithubAuthProvider();
+
+      // signInWithProvider, FlutterFire 4.5+ ile gelen yeni yöntem
+      final result = await _auth.signInWithProvider(githubProvider);
+
+      if (result.user != null) {
+        setState(() {
+          _successMessage = "GitHub ile giriş başarılı!";
+        });
+
+        await Future.delayed(const Duration(seconds: 1));
+
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomePage()),
+        );
+      }
+    } catch (e) {
+      _showError('GitHub Giriş Hatası: $e');
+      setState(() => _isLoading = false);
+    }
+  }
+
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -117,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-// Controller'ları serbest bırak
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -129,7 +163,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       appBar: CustomAppBar(title: "Giriş Yap"),
@@ -185,19 +218,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: _isLoading
                   ? SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(
-                        color: colorScheme.onPrimary,
-                        strokeWidth: 2,
-                      ),
-                    )
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  color: colorScheme.onPrimary,
+                  strokeWidth: 2,
+                ),
+              )
                   : Text(
-                      'Giriş Yap',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: colorScheme.onPrimary,
-                      ),
-                    ),
+                'Giriş Yap',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onPrimary,
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -224,6 +257,23 @@ class _LoginPageState extends State<LoginPage> {
               isLoading: _isLoading,
               onPressed: _signInWithGoogle,
               buttonText: 'Google ile devam et',
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.code),
+              label: Text(
+                'GitHub ile devam et',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onPrimary,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+              onPressed: _isLoading ? null : _signInWithGitHub,
             ),
             const SizedBox(height: 24),
             Row(

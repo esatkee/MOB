@@ -14,7 +14,7 @@ class EditNotePage extends StatefulWidget {
   @override
   _EditNotePageState createState() => _EditNotePageState();
 }
-
+// Not metni için kontrolör
 class _EditNotePageState extends State<EditNotePage> {
   late TextEditingController _textController;
   bool _isLoading = false;
@@ -22,6 +22,7 @@ class _EditNotePageState extends State<EditNotePage> {
   @override
   void initState() {
     super.initState();
+    // Eğer düzenlenen not varsa, textController'a mevcut metni yükle
     _textController = TextEditingController(
       text: widget.note?['text'] ?? widget.note?['content'] ?? '',
     );
@@ -29,10 +30,11 @@ class _EditNotePageState extends State<EditNotePage> {
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textController.dispose(); // Bellek sızıntısını önlemek için controller'ı temizle
     super.dispose();
   }
 
+  // Notu kaydet veya güncelle
   Future<void> _saveNote() async {
     setState(() => _isLoading = true);
 
@@ -45,10 +47,10 @@ class _EditNotePageState extends State<EditNotePage> {
     if (!mounted) return;
 
     if (result != null) {
-      Navigator.pop(context, result);
+      Navigator.pop(context, result); // İşlem başarılıysa önceki sayfaya sonucu göndererek dön
     }
 
-    setState(() => _isLoading = false);
+    setState(() => _isLoading = false); // Yükleniyor durumunu kapat
   }
 
   @override
@@ -77,7 +79,6 @@ class _EditNotePageState extends State<EditNotePage> {
                   children: [
                     NoteTextInput(controller: _textController),
                     const SizedBox(height: AppConstants.defaultPadding),
-                    // Image preview kaldırıldı
                   ],
                 ),
               ),

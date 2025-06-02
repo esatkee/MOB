@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Şifre alanları için decoration
 InputDecoration _passwordDecoration({
   required String label,
   required IconData icon,
@@ -18,6 +19,7 @@ InputDecoration _passwordDecoration({
   );
 }
 
+// Normal input alanları için standart InputDecoration
 InputDecoration _standardDecoration(String label, IconData icon) {
   return InputDecoration(
     labelText: label,
@@ -37,12 +39,14 @@ InputDecoration _inputDecoration(
         ? _passwordDecoration(label: label, icon: icon, onVisibilityToggle: onVisibilityToggle!, obscure: obscure)
         : _standardDecoration(label, icon);
 
+// E-posta doğrulama fonksiyonu
 String? validateEmail(String? value) {
   if (value == null || value.isEmpty) return 'Please enter your email';
   if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Please enter a valid email';
   return null;
 }
 
+// Şifre doğrulama
 String? validatePassword(String? value) {
   if (value == null || value.isEmpty) return 'Please enter a password';
   if (value.length < 6) return 'Password must be at least 6 characters';
@@ -55,6 +59,7 @@ String? validateConfirmPassword(String? value, String original) {
   return null;
 }
 
+// Hata mesajı
 void showError(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -66,24 +71,28 @@ void showError(BuildContext context, String message) {
   );
 }
 
+// Firebase hata kodlarını okunabilir mesaja çevirir
 String firebaseErrorMessage(String code) {
   switch (code) {
     case 'weak-password':
-      return 'The password provided is too weak.';
+      return 'Girilen şifre çok zayıf.';
     case 'email-already-in-use':
-      return 'The account already exists for that email.';
+      return 'Bu e-posta adresi zaten kayıtlı.';
     case 'invalid-email':
-      return 'The email address is invalid.';
+      return 'Geçersiz e-posta adresi.';
     default:
-      return 'An error occurred';
+      return 'Bir hata oluştu.';
   }
 }
 
+
+// Yeni kullanıcıyı Supabase veritabanına ekler
 Future<void> insertUserToSupabase(String uid) async {
   final supabase = Supabase.instance.client;
 
   final response = await supabase.from('user').insert({'firebase_uid': uid}).select();
 
+  // Eğer kullanıcı eklenememişse veya zaten varsa hata ver
   if (response == null || (response is List && response.isEmpty)) {
     throw Exception("User could not be inserted or already exists.");
   }

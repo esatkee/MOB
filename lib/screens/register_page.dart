@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/services.dart';
 import 'home_page.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/google_button.dart';
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,7 +15,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // Email, şifre ve şifre onayı için controllerlar
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -48,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
       rethrow;
     }
   }
-// Email ve şifre ile kayıt işlemi
+
   Future<void> _registerWithEmail() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -93,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   }
-// Google ile kayıt/giriş işlemi
+
   Future<void> _signInWithGoogle() async {
     setState(() {
       _isLoading = true;
@@ -139,7 +138,40 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-// Hata mesajlarını SnackBar ile göster
+
+  Future<void> _signInWithGitHub() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final provider = GithubAuthProvider();
+
+      final userCredential = await _auth.signInWithProvider(provider);
+      final user = userCredential.user;
+
+      if (user != null) {
+        await _insertUserToSupabase(user.uid);
+      }
+
+      setState(() {
+        _successMessage = 'GitHub ile giriş başarılı!';
+      });
+
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
+    } catch (e) {
+      _showError('GitHub Giriş Hatası: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -176,6 +208,7 @@ class _RegisterPageState extends State<RegisterPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
+
               Text(
                 "Diary+'a Hoş Geldiniz!",
                 style: theme.textTheme.headlineMedium?.copyWith(
@@ -191,6 +224,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 32),
+
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -223,11 +257,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
               const SizedBox(height: 16),
+
               TextFormField(
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  labelText: 'Password',
+                  labelText: 'Şifre',
                   prefixIcon: Icon(Icons.lock, color: colorScheme.primary),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -267,6 +302,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
               const SizedBox(height: 16),
+
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
@@ -311,6 +347,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
               const SizedBox(height: 24),
+
               ElevatedButton(
                 onPressed: _isLoading ? null : _registerWithEmail,
                 style: ElevatedButton.styleFrom(
@@ -321,51 +358,66 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: _isLoading
                     ? SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          color: theme.colorScheme.onPrimary,
-                          strokeWidth: 2,
-                        ),
-                      )
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    color: theme.colorScheme.onPrimary,
+                    strokeWidth: 2,
+                  ),
+                )
                     : Text(
-                        'Create Account',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.onPrimary,
-                        ),
-                      ),
+                  'Create Account',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.onPrimary,
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
+
               Row(
                 children: [
                   const Expanded(child: Divider()),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
+                    child: Text('OR', style: TextStyle(color: Colors.grey[600])),
                   ),
                   const Expanded(child: Divider()),
                 ],
               ),
               const SizedBox(height: 16),
 
-              // ✅ Google Button (Custom Widget)
               GoogleSignInButton(
                 buttonText: "Google ile devam et",
                 onPressed: _signInWithGoogle,
                 isLoading: _isLoading,
               ),
 
+              const SizedBox(height: 12),
+
+              ElevatedButton.icon(
+                icon: const Icon(Icons.code),
+                label: Text(
+                  'GitHub ile devam et',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                onPressed: _isLoading ? null : _signInWithGitHub,
+              ),
+
+
               const SizedBox(height: 24),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Already have an account?',
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
+                  Text('Already have an account?', style: TextStyle(color: Colors.grey[600])),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -374,6 +426,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
+
               if (_successMessage.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 16),

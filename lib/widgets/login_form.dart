@@ -41,7 +41,7 @@ class EmailPasswordForm extends StatelessWidget {
             controller: passwordController,
             obscureText: obscurePassword,
             decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: 'Şifre',
               prefixIcon: const Icon(Icons.lock),
               suffixIcon: IconButton(
                 icon: Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),

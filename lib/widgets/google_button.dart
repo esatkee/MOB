@@ -7,12 +7,14 @@ class GoogleSignInButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isLoading;
   final String buttonText;
+  final String? icon; // <-- Add this line
 
   const GoogleSignInButton({
     Key? key,
     required this.onPressed,
     required this.isLoading,
     this.buttonText = 'Google ile devam et',
+    this.icon, // <-- Add this
   }) : super(key: key);
 
   @override
@@ -30,7 +32,11 @@ class GoogleSignInButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.network(googleLogoUrl, height: 36, width: 36),
+          Image.network(
+            icon ?? googleLogoUrl,
+            height: 36,
+            width: 36,
+          ),
           const SizedBox(width: 12),
           Text(
             buttonText,

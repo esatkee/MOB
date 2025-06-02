@@ -45,6 +45,9 @@ dev_dependencies:
   intl: ^0.18.0
   shared_preferences: ^2.2.2
   provider: ^6.1.2
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  cloud_firestore: ^4.17.5
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

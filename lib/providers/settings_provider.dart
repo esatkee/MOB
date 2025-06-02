@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import '../constants/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../functions/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class SettingsProvider extends ChangeNotifier {
-  static const _themeColorKey = 'theme_color';
-  static const _textSizeKey = 'text_size';
-  static const _darkModeKey = 'dark_mode';
-  static const _notificationsEnabledKey = 'notifications_enabled';
-  static const _soundEnabledKey = 'sound_enabled';
-  static const _vibrationEnabledKey = 'vibration_enabled';
+  static const _table = 'settings';
+  static const _rowId = 1;
 
-  late SharedPreferences _prefs;
-
-  // Default values
   Color _themeColor = AppConstants.primaryColor;
   double _textSize = AppConstants.mediumTextSize;
   bool _isDarkMode = false;
   bool _notificationsEnabled = true;
   bool _soundEnabled = true;
   bool _vibrationEnabled = true;
-
 
   Color get themeColor => _themeColor;
   double get textSize => _textSize;
@@ -29,33 +22,37 @@ class SettingsProvider extends ChangeNotifier {
   bool get vibrationEnabled => _vibrationEnabled;
 
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
-    _loadSettings();
-  }
+    final db = await DatabaseHelper().database;
+    final settingsList = await db.query(_table, where: 'id = ?', whereArgs: [_rowId]);
 
-  void _loadSettings() {
-    final colorValue = _prefs.getInt(_themeColorKey);
-    if (colorValue != null) {
-      _themeColor = Color(colorValue);
+    if (settingsList.isNotEmpty) {
+      final settings = settingsList.first;
+      _themeColor = Color(settings['themeColor'] as int);
+      _textSize = settings['textSize'] as double;
+      _isDarkMode = (settings['darkMode'] as int) == 1;
+      _notificationsEnabled = (settings['notificationsEnabled'] as int) == 1;
+      _soundEnabled = (settings['soundEnabled'] as int) == 1;
+      _vibrationEnabled = (settings['vibrationEnabled'] as int) == 1;
     }
-
-    _textSize = _prefs.getDouble(_textSizeKey) ?? AppConstants.mediumTextSize;
-    _isDarkMode = _prefs.getBool(_darkModeKey) ?? false;
-    _notificationsEnabled = _prefs.getBool(_notificationsEnabledKey) ?? true;
-    _soundEnabled = _prefs.getBool(_soundEnabledKey) ?? true;
-    _vibrationEnabled = _prefs.getBool(_vibrationEnabledKey) ?? true;
 
     notifyListeners();
   }
 
   Future<void> _saveSettings() async {
-    await _prefs.setInt(_themeColorKey, _themeColor.value);
-    await _prefs.setDouble(_textSizeKey, _textSize);
-    await _prefs.setBool(_darkModeKey, _isDarkMode);
-    await _prefs.setBool(_notificationsEnabledKey, _notificationsEnabled);
-    await _prefs.setBool(_soundEnabledKey, _soundEnabled);
-    await _prefs.setBool(_vibrationEnabledKey, _vibrationEnabled);
-
+    final db = await DatabaseHelper().database;
+    await db.update(
+      _table,
+      {
+        'themeColor': _themeColor.value,
+        'textSize': _textSize,
+        'darkMode': _isDarkMode ? 1 : 0,
+        'notificationsEnabled': _notificationsEnabled ? 1 : 0,
+        'soundEnabled': _soundEnabled ? 1 : 0,
+        'vibrationEnabled': _vibrationEnabled ? 1 : 0,
+      },
+      where: 'id = ?',
+      whereArgs: [_rowId],
+    );
     notifyListeners();
   }
 

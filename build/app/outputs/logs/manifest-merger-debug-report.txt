@@ -63,6 +63,7 @@ MERGED from [:url_launcher_android] /Users/esatkuce/Desktop/mobiluygulamafinal-m
 MERGED from [:app_links] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/app_links/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:google_sign_in_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/google_sign_in_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-9:12
 MERGED from [:path_provider_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/sqflite_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.preference:preference:1.2.1] /Users/esatkuce/.gradle/caches/8.10.2/transforms/79bb1f0e52a4fb2b42af64902ad28b98/transformed/preference-1.2.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.browser:browser:1.8.0] /Users/esatkuce/.gradle/caches/8.10.2/transforms/b1a0ca4ce2bb9786da136d99ba93bc33/transformed/browser-1.8.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] /Users/esatkuce/.gradle/caches/8.10.2/transforms/cc974f64fa9f00a7a0a5c94db21ed944/transformed/recyclerview-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -181,6 +182,8 @@ MERGED from [:google_sign_in_android] /Users/esatkuce/Desktop/mobiluygulamafinal
 MERGED from [:google_sign_in_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/google_sign_in_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/sqflite_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite_android] /Users/esatkuce/Desktop/mobiluygulamafinal-main/build/sqflite_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [androidx.preference:preference:1.2.1] /Users/esatkuce/.gradle/caches/8.10.2/transforms/79bb1f0e52a4fb2b42af64902ad28b98/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.preference:preference:1.2.1] /Users/esatkuce/.gradle/caches/8.10.2/transforms/79bb1f0e52a4fb2b42af64902ad28b98/transformed/preference-1.2.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.browser:browser:1.8.0] /Users/esatkuce/.gradle/caches/8.10.2/transforms/b1a0ca4ce2bb9786da136d99ba93bc33/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
