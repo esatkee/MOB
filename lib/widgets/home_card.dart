@@ -24,7 +24,7 @@ class HomeNoteCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          note['content'] ?? '',
+          _getTrimmedContent(note['content']),
           style: theme.textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurface.withOpacity(0.7),
           ),
@@ -33,4 +33,13 @@ class HomeNoteCard extends StatelessWidget {
       ),
     );
   }
+
+  String _getTrimmedContent(String? content) {
+    if (content == null || content.isEmpty) return '';
+    const maxLength = 100;
+    return content.length > maxLength
+        ? '${content.substring(0, maxLength)}...'
+        : content;
+  }
 }
+

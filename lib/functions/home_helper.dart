@@ -19,7 +19,7 @@ class HomeHelper {
     }
   }
 
-  static Future<void> deleteNote(String diaryId) async {
+  static Future<void> deleteNote(int diaryId) async {
     try {
       await supabase.from('diary').delete().eq('diary_id', diaryId);
     } catch (e) {
