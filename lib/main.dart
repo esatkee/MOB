@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase import
+import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase paketi
 
 import 'firebase_options.dart';
 import 'screens/login_page.dart';
@@ -16,21 +16,21 @@ import 'constants/constants.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
+  // Firebase'i başlatıyoruz
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Initialize Supabase
+  // Supabase'i başlatıyoruz
   await Supabase.initialize(
-    url: 'https://jspsknitanbilrnavgmu.supabase.co', // TODO: Replace with your Supabase project URL
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzcHNrbml0YW5iaWxybmF2Z211Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3MjQyNTMsImV4cCI6MjA2NDMwMDI1M30.Q_mFBwBhzfgdxVDXV11xjvmtSkyzgXiB_AWIQQ9y98E', // TODO: Replace with your anon/public key
+    url: 'https://jspsknitanbilrnavgmu.supabase.co', // Supabase projenizin URL'si
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzcHNrbml0YW5iaWxybmF2Z211Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3MjQyNTMsImV4cCI6MjA2NDMwMDI1M30.Q_mFBwBhzfgdxVDXV11xjvmtSkyzgXiB_AWIQQ9y98E', // Supabase projenizin public anahtarı
   );
 
   runApp(const MyApp());
 }
 
-// Make Supabase client globally accessible
+// Supabase istemcisi global olarak erişilebilir
 final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Ayar sağlayıcısını başlatıyoruz
     return ChangeNotifierProvider(
       create: (_) => SettingsProvider()..init(),
       child: Consumer<SettingsProvider>(
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           final scaleFactor = settings.textSize / baseTextSize;
           
           return MaterialApp(
-            title: 'Diary+',
+            title: 'Diary+', // Uygulama başlığı
             theme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
@@ -129,12 +130,12 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: '/',
             routes: {
-              '/': (context) => const LoginPage(),
-              '/register': (context) => const RegisterPage(),
-              '/home': (context) => const HomePage(),
-              '/diary': (context) => EditNotePage(),
-              '/profile': (context) => const ProfilePage(),
-              '/settings': (context) => const SettingsPage(),
+              '/': (context) => const LoginPage(), // Giriş ekranı
+              '/register': (context) => const RegisterPage(), // Kayıt ekranı
+              '/home': (context) => const HomePage(), // Ana sayfa
+              '/diary': (context) => EditNotePage(), // Günlük detay ekranı
+              '/profile': (context) => const ProfilePage(), // Profil ekranı
+              '/settings': (context) => const SettingsPage(), // Ayarlar ekranı
             },
           );
         },
@@ -143,8 +144,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Optional: Reusable Snackbar extension
+
 extension ContextExtension on BuildContext {
+  // Ekranın alt kısmında bilgi mesajı gösteriyor
   void showSnackBar(String message, {bool isError = false}) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(

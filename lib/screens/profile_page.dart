@@ -6,6 +6,7 @@ import '../widgets/custom_drawer.dart';
 import '../constants/constants.dart';
 import '../constants/texts.dart';
 
+// Profil sayfası için StatefulWidget tanımlanıyor
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -13,39 +14,57 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
+// Profil sayfasının durumunu yöneten sınıf
 class _ProfilePageState extends State<ProfilePage> {
+  // Form doğrulama için global anahtar
   final _formKey = GlobalKey<FormState>();
+
+  // Kullanıcı bilgileri için metin denetleyicileri
   late TextEditingController _nameController;
   late TextEditingController _birthDateController;
   late TextEditingController _locationController;
   late TextEditingController _bioController;
 
+  // İl/şehir verilerini tutan liste
   List<Map<String, dynamic>> _provinces = [];
+
+  // Seçilen il/şehir ID'si
   int? _selectedProvinceId;
+
+  // Yükleme durumunu takip eden değişken
   bool _isLoading = false;
 
+  // Sayfa ilk yüklendiğinde çalışan fonksiyon
   @override
   void initState() {
     super.initState();
+
+    // Giriş yapmış kullanıcıyı alır
     final user = FirebaseAuth.instance.currentUser;
+
+    // Text denetleyicilerini başlatır
     _nameController = TextEditingController(text: user?.displayName ?? '');
     _birthDateController = TextEditingController();
     _locationController = TextEditingController();
     _bioController = TextEditingController();
 
+    // İl verilerini ve kullanıcı profilini yükler
     _fetchProvinces();
     _loadUserProfile();
   }
 
+  // Supabase'den il/şehir verilerini çeker
   Future<void> _fetchProvinces() async {
     final supabase = Supabase.instance.client;
     final data = await supabase.from('provinces').select();
 
+    // Veriyi listeye dönüştürerek durumu günceller
     setState(() {
       _provinces = List<Map<String, dynamic>>.from(data);
     });
   }
 
+  // Kullanıcının mevcut profil verilerini yükler
   Future<void> _loadUserProfile() async {
     setState(() => _isLoading = true);
     final supabase = Supabase.instance.client;
@@ -54,16 +73,19 @@ class _ProfilePageState extends State<ProfilePage> {
     if (uid == null) return;
 
     try {
+      // Supabase'den kullanıcı verisini alır
       final data = await supabase
           .from('user')
           .select()
           .eq('firebase_uid', uid)
           .maybeSingle();
 
+      // Veri varsa denetleyicilere atar
       if (data != null) {
         _locationController.text = data['location'] ?? '';
         _selectedProvinceId = data['province_id'];
 
+        // Doğum tarihi varsa formatlayarak gösterir
         final birthdayString = data['birthday'];
         if (birthdayString != null && birthdayString.isNotEmpty) {
           final birthdayDate = DateTime.tryParse(birthdayString);
@@ -78,9 +100,10 @@ class _ProfilePageState extends State<ProfilePage> {
         _bioController.text = data['bio'] ?? '';
       }
     } catch (e) {
+      // Hata durumunda kullanıcıya hata mesajı gösterilir
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error loading profile: $e'),
+          content: Text('Profil yüklenirken hata oluştu: $e'),
           backgroundColor: AppConstants.errorColor,
         ),
       );
@@ -89,7 +112,9 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // Kullanıcı profilini kaydeden fonksiyon
   Future<void> _saveProfile() async {
+    // Form geçerli değilse işlemi durdurur
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
@@ -98,6 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (uid == null) return;
 
     try {
+      // Doğum tarihi metnini parçalayarak DateTime objesi oluşturur
       final birthdayParts = _birthDateController.text.split('/');
       DateTime? birthday;
       if (birthdayParts.length == 3) {
@@ -108,6 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       }
 
+      // Supabase'e kullanıcı bilgilerini güncelleme isteği gönderir
       await supabase.from('user').update({
         'full_name': _nameController.text,
         'location': _locationController.text,
@@ -116,8 +143,10 @@ class _ProfilePageState extends State<ProfilePage> {
         'bio': _bioController.text,
       }).eq('firebase_uid', uid);
 
+      // Firebase üzerinde kullanıcı adını da günceller
       await FirebaseAuth.instance.currentUser?.updateDisplayName(_nameController.text);
 
+      // Başarılı kayıt sonrası kullanıcıya bildirim gösterilir
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppTexts.profileUpdateSuccess),
@@ -125,9 +154,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     } catch (e) {
+      // Hata durumunda kullanıcıya uyarı gösterilir
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error saving profile: $e'),
+          content: Text('Profil kaydedilirken hata oluştu: $e'),
           backgroundColor: AppConstants.errorColor,
         ),
       );
@@ -136,6 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // Takvim açılarak kullanıcıdan doğum tarihi seçmesini sağlar
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -143,6 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       builder: (context, child) {
+        // Takvim temasını uygulama renklerine göre özelleştirir
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
@@ -158,6 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
 
+    // Tarih seçildiyse metin kutusunu günceller
     if (picked != null) {
       setState(() {
         _birthDateController.text =
@@ -166,6 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // Sayfa yok edilirken controller'ları serbest bırakır
   @override
   void dispose() {
     _nameController.dispose();
@@ -174,6 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _bioController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

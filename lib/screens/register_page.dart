@@ -15,6 +15,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  // Email, şifre ve şifre onayı için controllerlar
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -38,16 +39,16 @@ class _RegisterPageState extends State<RegisterPage> {
       debugPrint('Supabase insert response: $response');
 
       if (response == null || (response is List && response.isEmpty)) {
-        throw Exception("User could not be inserted or already exists.");
+        throw Exception("Kullanıcı eklenemedi veya zaten mevcut.");
       }
 
-      debugPrint('User inserted into Supabase successfully.');
+      debugPrint('Kullanıcı Supabase\'e başarıyla eklendi.');
     } catch (e) {
-      debugPrint('Supabase Insert Error: ${e.toString()}');
+      debugPrint('Supabase Ekleme Hatası: ${e.toString()}');
       rethrow;
     }
   }
-
+// Email ve şifre ile kayıt işlemi
   Future<void> _registerWithEmail() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -64,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
       await _insertUserToSupabase(credential.user!.uid);
 
       setState(() {
-        _successMessage = 'Registration successful!';
+        _successMessage = 'Kayıt başarılı!';
       });
 
       if (!mounted) return;
@@ -73,17 +74,17 @@ class _RegisterPageState extends State<RegisterPage> {
         MaterialPageRoute(builder: (_) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
-      String errorMessage = 'An error occurred';
+      String errorMessage = 'Bir hata oluştu';
       if (e.code == 'weak-password') {
-        errorMessage = 'The password provided is too weak.';
+        errorMessage = 'Girilen şifre çok zayıf.';
       } else if (e.code == 'email-already-in-use') {
-        errorMessage = 'The account already exists for that email.';
+        errorMessage = 'Bu e-posta adresi zaten kullanımda.';
       } else if (e.code == 'invalid-email') {
-        errorMessage = 'The email address is invalid.';
+        errorMessage = 'Geçersiz e-posta adresi.';
       }
       _showError(errorMessage);
     } catch (e) {
-      _showError('Error: $e');
+      _showError('Hata: $e');
     } finally {
       if (mounted) {
         setState(() {
@@ -92,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   }
-
+// Google ile kayıt/giriş işlemi
   Future<void> _signInWithGoogle() async {
     setState(() {
       _isLoading = true;
@@ -123,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
 
       setState(() {
-        _successMessage = 'Google sign-in successful!';
+        _successMessage = 'Google ile giriş başarılı!';
       });
 
       if (!mounted) return;
@@ -132,13 +133,13 @@ class _RegisterPageState extends State<RegisterPage> {
         MaterialPageRoute(builder: (_) => const HomePage()),
       );
     } catch (e) {
-      _showError('Google Sign-In Error: $e');
+      _showError('Google Giriş Hatası: $e');
       setState(() {
         _isLoading = false;
       });
     }
   }
-
+// Hata mesajlarını SnackBar ile göster
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -166,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Register"),
+      appBar: CustomAppBar(title: "Kayıt Ol"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Form(
@@ -176,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               const SizedBox(height: 20),
               Text(
-                "Welcome To Diary+!",
+                "Diary+'a Hoş Geldiniz!",
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.onSurface,
@@ -184,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                "Create an account to continue",
+                "Devam etmek için bir hesap oluşturun",
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: colorScheme.onSurface.withOpacity(0.7),
                 ),
@@ -212,11 +213,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return 'Lütfen e-posta adresinizi girin';
                   }
                   if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                       .hasMatch(value)) {
-                    return 'Please enter a valid email';
+                    return 'Lütfen geçerli bir e-posta adresi girin';
                   }
                   return null;
                 },
@@ -257,10 +258,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 style: TextStyle(color: colorScheme.onSurface),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
+                    return 'Lütfen şifrenizi girin';
                   }
                   if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
+                    return 'Şifre en az 6 karakter olmalıdır';
                   }
                   return null;
                 },
@@ -270,7 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
                 decoration: InputDecoration(
-                  labelText: 'Confirm Password',
+                  labelText: 'Şifreyi Onayla',
                   prefixIcon: Icon(Icons.lock, color: colorScheme.primary),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -301,10 +302,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 style: TextStyle(color: colorScheme.onSurface),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please confirm your password';
+                    return 'Lütfen şifrenizi onaylayın';
                   }
                   if (value != _passwordController.text) {
-                    return 'Passwords do not match';
+                    return 'Şifreler eşleşmiyor';
                   }
                   return null;
                 },

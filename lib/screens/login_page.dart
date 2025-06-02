@@ -6,6 +6,7 @@ import '../widgets/login_form.dart';
 import '../widgets/google_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+// Giriş sayfası - Email/şifre ve Google ile giriş sağlar
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       _obscurePassword = !_obscurePassword;
     });
   }
-
+  // Email ve şifre ile giriş yapma işlemi
   Future<void> _loginWithEmailPassword() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -41,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       setState(() {
-        _successMessage = "Login successful!";
+        _successMessage = "Giriş başarılı!";
       });
-
+// Başarılı giriş sonrası yönlendirme
       await Future.delayed(const Duration(seconds: 1));
 
       if (!mounted) return;
@@ -52,24 +53,24 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (_) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
-      String errorMessage = 'An error occurred';
+      String errorMessage = 'Bir hata oluştu';
       if (e.code == 'user-not-found') {
-        errorMessage = 'No user found for that email.';
+        errorMessage = 'Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.';
       } else if (e.code == 'wrong-password') {
-        errorMessage = 'Wrong password provided for that user.';
+        errorMessage = 'Yanlış şifre girdiniz.';
       } else if (e.code == 'invalid-email') {
-        errorMessage = 'The email address is invalid.';
+        errorMessage = 'Geçersiz e-posta adresi.';
       }
       _showError(errorMessage);
     } catch (e) {
-      _showError('Error: $e');
+      _showError('Hata: $e');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
     }
   }
-
+// Google ile giriş işlemi
   Future<void> _signInWithGoogle() async {
     setState(() => _isLoading = true);
 
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
       await _auth.signInWithCredential(credential);
 
       setState(() {
-        _successMessage = "Google sign-in successful!";
+        _successMessage = "Google ile giriş başarılı!";
       });
 
       await Future.delayed(const Duration(seconds: 1));
@@ -101,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (_) => const HomePage()),
       );
     } catch (e) {
-      _showError('Google Sign-In Error: $e');
+      _showError('Google Giriş Hatası: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
+// Controller'ları serbest bırak
   @override
   void dispose() {
     _emailController.dispose();
@@ -131,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
     final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Sign In"),
+      appBar: CustomAppBar(title: "Giriş Yap"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -139,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const SizedBox(height: 20),
             Text(
-              "Welcome Back!",
+              "Tekrar Hoş Geldiniz!",
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.onSurface,
@@ -147,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Sign in to continue",
+              "Devam etmek için giriş yapın",
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurface.withOpacity(0.7),
               ),
@@ -165,10 +166,10 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // forgot password işlemi eklenebilir
+                  // Şifremi unuttum işlemi eklenebilir
                 },
                 child: Text(
-                  'Forgot Password?',
+                  'Şifremi Unuttum',
                   style: TextStyle(color: colorScheme.primary),
                 ),
               ),
@@ -192,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     )
                   : Text(
-                      'Sign In',
+                      'Giriş Yap',
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: colorScheme.onPrimary,
                       ),
@@ -207,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    'OR',
+                    'VEYA',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurface.withOpacity(0.7),
                     ),
@@ -229,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have an account?",
+                  "Hesabınız yok mu?",
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurface.withOpacity(0.7),
                   ),
@@ -239,7 +240,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushNamed(context, '/register');
                   },
                   child: Text(
-                    'Register',
+                    'Kayıt Ol',
                     style: TextStyle(color: colorScheme.primary),
                   ),
                 ),

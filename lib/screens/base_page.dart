@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_drawer.dart';
 
+// Uygulamanın temel sayfa yapısını oluşturan stateless bir widget
 class BasePage extends StatelessWidget {
   final String title;
   final Widget body;
@@ -14,6 +15,7 @@ class BasePage extends StatelessWidget {
     this.drawer,
   });
 
+  // Sayfanın kullanıcı arayüzünü oluşturan kısım
   @override
   Widget build(BuildContext context) {
     return Scaffold(

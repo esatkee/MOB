@@ -9,6 +9,7 @@ import '../widgets/home_card.dart';
 import '../widgets/note_dialog.dart';
 import '../screens/diary_detail.dart';
 
+// Stateful bir ana sayfa widget'ı
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+// Ana sayfanın durumunu yöneten sınıf
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _notes = [];
   bool _isLoading = true;
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _fetchNotes();
   }
-
+// Asenkron olarak notları veritabanından çeken fonksiyon
   Future<void> _fetchNotes() async {
     try {
       final notes = await HomeHelper.fetchNotes();
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load notes: $e')),
+        SnackBar(content: Text('Notlar yüklenirken hata oluştu: $e')),
       );
     }
   }
