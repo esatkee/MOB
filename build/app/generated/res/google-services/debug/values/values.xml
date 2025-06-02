@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">485417259709</string>
+    <string name="google_api_key" translatable="false">AIzaSyAhOWRYfYjL-pe1lCHAa7Poy8lxRwbqYFc</string>
+    <string name="google_app_id" translatable="false">1:485417259709:android:fea0a811e4d47a549d1dd4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAhOWRYfYjL-pe1lCHAa7Poy8lxRwbqYFc</string>
+    <string name="google_storage_bucket" translatable="false">mobiluygulamagelistirme-d5e34.firebasestorage.app</string>
+    <string name="project_id" translatable="false">mobiluygulamagelistirme-d5e34</string>
+</resources>

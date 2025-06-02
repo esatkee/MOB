@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "485417259709",
+    "project_id": "mobiluygulamagelistirme-d5e34",
+    "storage_bucket": "mobiluygulamagelistirme-d5e34.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485417259709:android:fea0a811e4d47a549d1dd4",
+        "android_client_info": {
+          "package_name": "com.example.mobiluygulamagelistirme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhOWRYfYjL-pe1lCHAa7Poy8lxRwbqYFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
