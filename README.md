@@ -4,6 +4,7 @@ Diary+, kullanıcıların günlüklerini kolayca oluşturup düzenleyebileceği,
 
 ## Proje için örnek hesap bilgileri
 - **Kullanıcı adı:** Efe  Kulahli
+- **E-posta:** efekulahli@gmail.com
 -  **Şifre:** 123456
 ## Projenin Amacı
 
