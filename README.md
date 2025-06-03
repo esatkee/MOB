@@ -3,7 +3,7 @@
 Diary+, kullanıcıların günlüklerini kolayca oluşturup düzenleyebileceği, modern arayüze sahip bir Flutter uygulamasıdır. Firebase Authentication ile güvenli giriş, Supabase ile veri saklama ve güçlü tema yönetimiyle kullanıcı dostu bir deneyim sunar.
 
 ## Proje için örnek hesap bilgileri
-- **Kullanıcı adı:** Efe Külahli
+- **Kullanıcı adı:** Efe  Kulahli
 -  **Şifre:** 123456
 ## Projenin Amacı
 
