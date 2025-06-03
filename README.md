@@ -46,7 +46,7 @@ Bu projenin temel amacı, kullanıcıların dijital günlüklerini güvenli ve e
 - Koddaki karmaşık satırların daha kolay anlaşılabilir olması için comment satırları ekledik
 - Kodun okunabilirliğini arttırmak için 300 satırdan uzun kodlar parçalara ayrıldı
 - Supabase’e eklenen  logo supabaseden çekilerek login ve register pagelerde kullanılmıştır
-
+- !!!Debug modda olduğu için uygulama eduroamda çalışmıyor
   
 ## Uygulama içi görüntüler
 ![image](https://github.com/user-attachments/assets/8862f786-3753-4185-b066-a7754a9677b9)
