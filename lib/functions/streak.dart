@@ -14,7 +14,7 @@ class StreakTracker {
     int currentStreak = prefs.getInt(_streakKey) ?? 0;
 
     if (lastLogin == today) {
-      // Already logged in today
+
       return currentStreak;
     }
 
@@ -27,13 +27,13 @@ class StreakTracker {
       if (isYesterday) {
         currentStreak += 1;
       } else {
-        currentStreak = 1; // Streak resets
+        currentStreak = 1;
       }
     } else {
-      currentStreak = 1; // First login ever
+      currentStreak = 1;
     }
 
-    // Save new values
+
     await prefs.setString(_lastLoginKey, today);
     await prefs.setInt(_streakKey, currentStreak);
 

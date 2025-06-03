@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthFunctions {
-  // Firebase Authentication örneği oluşturuluyor.
+  // Firebase Authentication örneği oluşturma.
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // E-posta ve şifre ile giriş fonksiyonu.
