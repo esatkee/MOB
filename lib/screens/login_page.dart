@@ -5,8 +5,6 @@ import '../widgets/custom_appbar.dart';
 import '../widgets/login_form.dart';
 import '../widgets/google_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-// GitHub için provider import
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
 // Giriş sayfası - Email/şifre, Google ve GitHub ile giriş sağlar
@@ -171,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 20),
             Text(
               "Tekrar Hoş Geldiniz!",
               style: theme.textTheme.headlineMedium?.copyWith(
@@ -179,14 +176,19 @@ class _LoginPageState extends State<LoginPage> {
                 color: colorScheme.onSurface,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox.fromSize(size: const Size.fromHeight(8)),
             Text(
-              "Devam etmek için giriş yapın",
+              "Devam etmek için giriş yapın...",
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurface.withOpacity(0.7),
               ),
             ),
-            const SizedBox(height: 32),
+            Image.network(
+              'https://jspsknitanbilrnavgmu.supabase.co/storage/v1/object/public/img//logo.png',
+              height: 120,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 24),
             EmailPasswordForm(
               formKey: _formKey,
               emailController: _emailController,
@@ -194,19 +196,7 @@ class _LoginPageState extends State<LoginPage> {
               obscurePassword: _obscurePassword,
               toggleObscurePassword: _toggleObscurePassword,
             ),
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  // Şifremi unuttum işlemi eklenebilir
-                },
-                child: Text(
-                  'Şifremi Unuttum',
-                  style: TextStyle(color: colorScheme.primary),
-                ),
-              ),
-            ),
+
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _isLoading ? null : _loginWithEmailPassword,

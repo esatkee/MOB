@@ -207,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
               Text(
                 "Diary+'a Hoş Geldiniz!",
@@ -223,7 +223,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   color: colorScheme.onSurface.withOpacity(0.7),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 18),
+              Image.network(
+                'https://jspsknitanbilrnavgmu.supabase.co/storage/v1/object/public/img//logo.png',
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 18),
 
               TextFormField(
                 controller: _emailController,
@@ -301,7 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
               TextFormField(
                 controller: _confirmPasswordController,
@@ -366,7 +372,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 )
                     : Text(
-                  'Create Account',
+                  'Kayıt Ol',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onPrimary,
                   ),
@@ -399,7 +405,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 label: Text(
                   'GitHub ile devam et',
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onPrimary,
+                    color: colorScheme.onSecondary,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -417,12 +423,12 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Already have an account?', style: TextStyle(color: Colors.grey[600])),
+                  Text('Zaten bir hesabın var mı ?', style: TextStyle(color: Colors.grey[600])),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Sign In'),
+                    child: const Text('Giriş Yap'),
                   ),
                 ],
               ),
