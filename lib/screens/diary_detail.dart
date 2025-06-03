@@ -22,7 +22,7 @@ class _EditNotePageState extends State<EditNotePage> {
   @override
   void initState() {
     super.initState();
-    // Eğer düzenlenen not varsa, textController'a mevcut metni yükle
+    // Eğer düzenlenen not varsa, textControllera mevcut metni yükler
     _textController = TextEditingController(
       text: widget.note?['text'] ?? widget.note?['content'] ?? '',
     );
@@ -30,7 +30,7 @@ class _EditNotePageState extends State<EditNotePage> {
 
   @override
   void dispose() {
-    _textController.dispose(); // Bellek sızıntısını önlemek için controller'ı temizle
+    _textController.dispose(); // Bellek sızıntısını önlemek için controllerı temizle
     super.dispose();
   }
 

@@ -5,7 +5,7 @@ import '../widgets/custom_drawer.dart';
 import '../constants/constants.dart';
 import '../constants/texts.dart';
 import '../providers/settings_provider.dart';
-
+// Ayarlar sayfası: Tema, bildirim, uygulama bilgileri gibi kullanıcı ayarlarını içerir
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -24,6 +24,7 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Görünüm ayarları bölümü
             _buildSectionHeader(AppTexts.appearance, textTheme),
             _buildSettingCard(
               theme: theme,
@@ -42,6 +43,7 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppConstants.largePadding),
+            // Bildirim ayarları bölümü
             _buildSectionHeader(AppTexts.notifications, textTheme),
             _buildSettingCard(
               theme: theme,
@@ -74,6 +76,7 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppConstants.largePadding),
+            // Hakkında bölümü
             _buildSectionHeader(AppTexts.about, textTheme),
             _buildSettingCard(
               theme: theme,
@@ -91,7 +94,7 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
+// Bölüm başlıklarını oluşturan widget
   Widget _buildSectionHeader(String title, TextTheme textTheme) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -104,7 +107,7 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
+  // Ayar kartı (örneğin: görünüm, bildirim vs. için)
   Widget _buildSettingCard({
     required ThemeData theme,
     required List<Widget> children,
@@ -124,7 +127,7 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
+// Renk seçici widget (tema rengi için)
   Widget _buildColorPicker(
     BuildContext context,
     SettingsProvider settings,
@@ -194,7 +197,7 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
+// Yazı boyutu seçici widget
   Widget _buildTextSizePicker(
     BuildContext context,
     SettingsProvider settings,

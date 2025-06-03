@@ -7,7 +7,7 @@ import '../widgets/google_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
-// Giriş sayfası - Email/şifre, Google ve GitHub ile giriş sağlar
+// Email/şifre, Google ve GitHub ile giriş sağlar
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final githubProvider = GithubAuthProvider();
 
-      // signInWithProvider, FlutterFire 4.5+ ile gelen yeni yöntem
+
       final result = await _auth.signInWithProvider(githubProvider);
 
       if (result.user != null) {
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() => _isLoading = false);
     }
   }
-
+// hata mesajı verilir login olmazsa gösterilir
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

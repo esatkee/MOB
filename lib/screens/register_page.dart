@@ -15,17 +15,18 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  // Email, şifre ve şifre tekrarı için controller'lar
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;// Firebase kimlik doğrulama nesnesi
+  final _formKey = GlobalKey<FormState>(); // Form doğrulama anahtarı
 
   String _successMessage = '';
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-
+// Yeni kullanıcıyı Supabase veri tabanına ekleme
   Future<void> _insertUserToSupabase(String uid) async {
     final supabase = Supabase.instance.client;
 
@@ -47,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
       rethrow;
     }
   }
-
+// E-mail ve şifre ile kayıt olma işlemi
   Future<void> _registerWithEmail() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -92,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   }
-
+// google ile kayıt olma işlemi
   Future<void> _signInWithGoogle() async {
     setState(() {
       _isLoading = true;
@@ -138,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-
+// github ile kayıt olma yeri
   Future<void> _signInWithGitHub() async {
     setState(() {
       _isLoading = true;
@@ -171,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-
+// hata gösterme yeri eğer kayıt olurken hata alırsa çalışır
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
