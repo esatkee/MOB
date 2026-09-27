@@ -1,0 +1,9 @@
+# Generated build output should not dominate GitHub's language statistics.
+**/build/** linguist-generated=true
+**/.dart_tool/** linguist-generated=true
+**/.cxx/** linguist-generated=true
+**/ephemeral/** linguist-generated=true
+**/generated_plugin_registrant.* linguist-generated=true
+**/generated_plugins.cmake linguist-generated=true
+**/GeneratedPluginRegistrant.* linguist-generated=true
+supabase_quickstart/** linguist-vendored=true
