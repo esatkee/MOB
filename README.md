@@ -1,20 +1,18 @@
 # Diary+
 
-A Flutter diary application built as a team project. Users can sign in, write and manage diary entries, edit their profiles and customise the app's appearance.
+A diary app built with Flutter, Firebase and Supabase.
 
-## Features
+Write and edit entries, manage your profile and customise the theme. Built as a team project.
 
-- Email/password and social sign-in workflows using Firebase Authentication.
-- Diary entry creation, editing and deletion.
-- Profile editing with Supabase-backed data.
-- Theme and text-size preferences managed with Provider.
-- Local settings and writing streak tracking.
+**Team:** Esat Küçe · Ritvan Angous · Muhammed Sait Yıldırım
 
-## Stack
+My contribution: login, registration, diary detail screens and Firebase integration.
 
-Flutter, Dart, Firebase Authentication, Supabase, Provider, SQLite and SharedPreferences.
 
-## Getting started
+<details>
+<summary>Setup & technical notes</summary>
+
+### Getting started
 
 Use a Flutter SDK compatible with Dart `^3.7.2` (see `pubspec.yaml`).
 
@@ -30,7 +28,7 @@ flutter run
 
 Backend services and their access rules must be configured separately; this repository is the Flutter client. The nested `supabase_quickstart/` folder is a separate sample, not the main application entry point.
 
-## Code structure
+### Code structure
 
 - `lib/screens/` — login, registration, diary, home, profile and settings screens.
 - `lib/functions/` — authentication, database, diary and streak helpers.
@@ -38,13 +36,10 @@ Backend services and their access rules must be configured separately; this repo
 - `lib/providers/` — application settings state.
 - `lib/constants/` — shared constants and text styles.
 
-## Team contributions
+### Team contributions
 
-- **Esat Küçe:** login, registration, diary detail screens and Firebase development.
 - **Ritvan Angous:** profile and settings screens; Supabase and SQLite database design.
 - **Muhammed Sait Yıldırım:** home screen, Firebase, Supabase and project reporting.
 - **Shared work:** drawer navigation.
 
-## Türkçe
-
-Diary+, günlük yazma ve düzenleme, profil yönetimi ve tema ayarları sunan bir ekip projesidir. Giriş, kayıt ve günlük detay ekranları ile Firebase geliştirmesinde görev aldım.
+</details>
